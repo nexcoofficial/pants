@@ -469,7 +469,7 @@
             <div class="header-content">
                 <div class="logo">Sun Protection Store</div>
                 <div class="contact-info">
-                    📱 WhatsApp: 081225681788 | 🚚 Gratis Ongkir se-Indonesia
+                    📱 WhatsApp: +62-812-2568-1788 | 🚚 Gratis Ongkir se-Indonesia
                 </div>
             </div>
         </div>
@@ -853,11 +853,42 @@
             // Generate WhatsApp message
             const message = generateWhatsAppMessage(formData);
             
-            // Open WhatsApp
-            const whatsappUrl = `https://wa.me/6281225681788?text=${encodeURIComponent(message)}`;
+            // Try multiple WhatsApp URL formats for better compatibility
+            const phoneNumber = '6281225681788'; // International format
+            const whatsappUrls = [
+                `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
+                `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`,
+                `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`
+            ];
             
             setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
+                // Try to open WhatsApp with error handling
+                let opened = false;
+                
+                // Primary method: wa.me
+                try {
+                    window.open(whatsappUrls[0], '_blank');
+                    opened = true;
+                } catch (error) {
+                    console.log('Primary WhatsApp method failed:', error);
+                }
+                
+                // Fallback method if primary fails
+                if (!opened) {
+                    try {
+                        window.location.href = whatsappUrls[1];
+                        opened = true;
+                    } catch (error) {
+                        console.log('Fallback WhatsApp method failed:', error);
+                    }
+                }
+                
+                // Show appropriate message
+                if (opened) {
+                    showSuccessMessage();
+                } else {
+                    showFallbackMessage(formData, phoneNumber);
+                }
                 
                 // Reset button
                 orderBtn.classList.remove('loading');
@@ -867,9 +898,6 @@
                     </svg>
                     Pesan via WhatsApp
                 `;
-                
-                // Show success message
-                showSuccessMessage();
             }, 1000);
         }
 
@@ -913,7 +941,81 @@ Terima kasih! 🙏`;
             return message;
         }
 
-        function showSuccessMessage() {
+        function showFallbackMessage(formData, phoneNumber) {
+            // Create fallback overlay for manual WhatsApp
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            const fallbackBox = document.createElement('div');
+            fallbackBox.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 15px;
+                text-align: center;
+                max-width: 500px;
+                margin: 0 20px;
+                animation: fadeIn 0.5s ease;
+                max-height: 80vh;
+                overflow-y: auto;
+            `;
+
+            const message = generateWhatsAppMessage(formData);
+            const manualMessage = message.replace(/\n/g, '%0A');
+
+            fallbackBox.innerHTML = `
+                <div style="color: #f39c12; font-size: 2.5rem; margin-bottom: 1rem;">⚠️</div>
+                <h3 style="color: #333; margin-bottom: 1rem;">WhatsApp Tidak Terbuka Otomatis</h3>
+                <p style="color: #666; margin-bottom: 1.5rem;">
+                    Jangan khawatir! Ada beberapa cara untuk mengirim pesanan:
+                </p>
+                
+                <div style="text-align: left; margin-bottom: 1.5rem; background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                    <h4 style="color: #667eea; margin-bottom: 0.5rem;">Cara 1: Manual WhatsApp</h4>
+                    <p style="margin-bottom: 0.5rem;">📱 Buka WhatsApp manual</p>
+                    <p style="margin-bottom: 0.5rem;">🔍 Cari nomor: <strong>${phoneNumber}</strong></p>
+                    <p style="margin-bottom: 0.5rem;">📝 Copy pesan di bawah</p>
+                </div>
+
+                <div style="text-align: left; margin-bottom: 1.5rem;">
+                    <h4 style="color: #667eea; margin-bottom: 0.5rem;">Cara 2: Copy Link</h4>
+                    <input type="text" readonly value="https://wa.me/${phoneNumber}?text=${manualMessage}" 
+                           style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem;"
+                           onclick="this.select()">
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 0.3rem;">Klik untuk select, lalu paste di browser</p>
+                </div>
+
+                <div style="text-align: left; margin-bottom: 1.5rem; background: #e8f4fd; padding: 1rem; border-radius: 8px;">
+                    <h4 style="color: #2196f3; margin-bottom: 0.5rem;">📝 Pesan untuk di-copy:</h4>
+                    <textarea readonly style="width: 100%; height: 150px; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem; font-family: monospace;" onclick="this.select()">${message}</textarea>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                    <button onclick="navigator.clipboard.writeText(\`${message.replace(/`/g, "\\`").replace(/\$/g, "\\$")}\`).then(() => alert('Pesan berhasil di-copy!'))" 
+                            style="background: #28a745; color: white; border: none; padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer;">
+                        📋 Copy Pesan
+                    </button>
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                            style="background: #667eea; color: white; border: none; padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer;">
+                        Tutup
+                    </button>
+                </div>
+            `;
+
+            overlay.appendChild(fallbackBox);
+            document.body.appendChild(overlay);
+        }
             // Create success overlay
             const overlay = document.createElement('div');
             overlay.style.cssText = `
