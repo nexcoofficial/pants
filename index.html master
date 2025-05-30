@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[PRODUCT_NAME] - [TAGLINE]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #667eea, #764ba2);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 15px 30px;
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+            to { box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideDown 1s ease;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            animation: slideUp 1s ease 0.3s both;
+        }
+        
+        .social-proof {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .social-proof h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #00ff88;
+        }
+        
+        .watching-now {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Product Images Section */
+        .product-showcase {
+            background: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .product-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .product-image:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Features Grid */
+        .features {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: #2c3e50;
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .testimonial-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .testimonial-header h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .stars {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Urgency Section */
+        .urgency {
+            background: linear-gradient(45deg, #ff6b6b, #ff4757);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .urgency::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .urgency h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: flash 1s infinite alternate;
+        }
+        
+        @keyframes flash {
+            from { opacity: 1; }
+            to { opacity: 0.7; }
+        }
+        
+        .countdown {
+            font-size: 2rem;
+            margin: 20px 0;
+            font-weight: bold;
+            background: rgba(0,0,0,0.3);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+        
+        /* Order Button */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 20px 50px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .price-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .price {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #00ff88;
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            color: #95a5a6;
+            font-size: 2.5rem;
+        }
+        
+        .guarantee {
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .product-images {
+                grid-template-columns: 1fr;
+            }
+            
+            .price {
+                font-size: 3rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span style="color:#008B8B; font-size: 1.2rem; font-weight: bold;">[QUALITY_BADGE]</span>
+                </div>
+                
+                <h1>[PRODUCT_NAME]</h1>
+                <p class="subtitle">[PRODUCT_SUBTITLE]</p>
+                
+                <div class="social-proof">
+                    <h3>👍 Telah direkomendasikan oleh <span style="color:#00ff88">[SOCIAL_PROOF_COUNT]</span> <span style="color:#ff6b6b">di Facebook, Twitter, dan Instagram</span></h3>
+                    
+                    <div class="watching-now">
+                        👀 <span id="viewers">[VIEWERS_COUNT]</span> orang <span style="color:#00ff88">sedang menonton ini sekarang</span>
+                    </div>
+                </div>
+                
+                <button class="cta-button" onclick="orderNow()">[CTA_TEXT]</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section class="product-showcase">
+        <div class="container">
+            <div class="quality-badge" style="background: linear-gradient(45deg, #00ff88, #00cc66); color: white; padding: 20px 40px; border-radius: 50px; font-size: 1.5rem; font-weight: bold; display: inline-block; margin-bottom: 30px; animation: bounce 2s infinite;">
+                [GUARANTEE_TEXT]
+            </div>
+            
+            <div class="product-images">
+                <!-- REPLACE WITH ACTUAL PRODUCT IMAGES -->
+                <div class="product-image floating">
+                    <img src="[IMAGE_1_URL]" alt="[PRODUCT_NAME]">
+                </div>
+                <div class="product-image">
+                    <img src="[IMAGE_2_URL]" alt="[PRODUCT_NAME]">
+                </div>
+                <div class="product-image">
+                    <img src="[IMAGE_3_URL]" alt="[PRODUCT_NAME]">
+                </div>
+                <div class="product-image">
+                    <img src="[IMAGE_4_URL]" alt="[PRODUCT_NAME]">
+                </div>
+                <!-- ADD MORE IMAGES AS NEEDED -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features fade-in">
+        <div class="container">
+            <h2>[FEATURES_HEADLINE]</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">[FEATURE_1_ICON]</div>
+                    <h3>[FEATURE_1_TITLE]</h3>
+                    <p>[FEATURE_1_DESCRIPTION]</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">[FEATURE_2_ICON]</div>
+                    <h3>[FEATURE_2_TITLE]</h3>
+                    <p>[FEATURE_2_DESCRIPTION]</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">[FEATURE_3_ICON]</div>
+                    <h3>[FEATURE_3_TITLE]</h3>
+                    <p>[FEATURE_3_DESCRIPTION]</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">[FEATURE_4_ICON]</div>
+                    <h3>[FEATURE_4_TITLE]</h3>
+                    <p>[FEATURE_4_DESCRIPTION]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials fade-in">
+        <div class="container">
+            <div class="testimonial-header">
+                <h2>[TESTIMONIAL_HEADLINE]</h2>
+                <p>[TESTIMONIAL_SUBTITLE]</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"[TESTIMONIAL_1_TEXT]"</p>
+                    <strong>- [TESTIMONIAL_1_NAME], [TESTIMONIAL_1_TITLE]</strong>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"[TESTIMONIAL_2_TEXT]"</p>
+                    <strong>- [TESTIMONIAL_2_NAME], [TESTIMONIAL_2_TITLE]</strong>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"[TESTIMONIAL_3_TEXT]"</p>
+                    <strong>- [TESTIMONIAL_3_NAME], [TESTIMONIAL_3_TITLE]</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="urgency">
+        <div class="container">
+            <h2>⚠️ STOK TINGGAL <span id="stock">[STOCK_COUNT]</span> UNIT!</h2>
+            <p>[URGENCY_TEXT]</p>
+            <div class="countdown" id="countdown">Promo berakhir dalam: 23:59:45</div>
+            <button class="cta-button" onclick="orderNow()">[URGENCY_CTA]</button>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="order">
+        <div class="container">
+            <h2>[FINAL_HEADLINE]</h2>
+            
+            <div class="price-section">
+                <div class="price">
+                    <span class="old-price">[OLD_PRICE]</span><br>
+                    <span>[NEW_PRICE]</span>
+                </div>
+                
+                <div class="guarantee">
+                    [GUARANTEE_LIST]
+                </div>
+                
+                <button class="cta-button" onclick="orderNow()" style="font-size: 1.6rem; padding: 25px 60px;">
+                    [FINAL_CTA_TEXT]
+                </button>
+                
+                <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                    [DISCLAIMER_TEXT]
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // REPLACE WITH ACTUAL ORDER URL
+        function orderNow() {
+            window.location.href = '[ORDER_URL]';
+        }
+        
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            const distance = tomorrow.getTime() - now;
+            
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').innerHTML = `Promo berakhir dalam: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Dynamic viewers count
+        function updateViewers() {
+            const viewers = document.getElementById('viewers');
+            const currentCount = parseInt(viewers.textContent);
+            const change = Math.floor(Math.random() * 5) - 2;
+            const newCount = Math.max(50, Math.min(100, currentCount + change));
+            viewers.textContent = newCount;
+        }
+        
+        // Dynamic stock count
+        function updateStock() {
+            const stock = document.getElementById('stock');
+            const currentStock = parseInt(stock.textContent);
+            if (currentStock > 10 && Math.random() < 0.3) {
+                stock.textContent = currentStock - 1;
+            }
+        }
+        
+        // Scroll animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Initialize
+        setInterval(updateCountdown, 1000);
+        setInterval(updateViewers, 15000);
+        setInterval(updateStock, 45000);
+        
+        window.addEventListener('scroll', handleScrollAnimations);
+        
+        updateCountdown();
+        handleScrollAnimations();
+    </script>
+</body>
+</html>
